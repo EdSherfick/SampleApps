@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ISimplePrimeController.cs" />
     <Compile Include="PrimeFoundEventArgs.cs" />
     <Compile Include="SimplePrimeController.cs" />
     <Compile Include="PrimeMaker.cs">

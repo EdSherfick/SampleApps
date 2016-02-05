@@ -32,8 +32,8 @@
             this.TimeRemaingLabel = new System.Windows.Forms.Label();
             this.TimeRemainingValue = new System.Windows.Forms.Label();
             this.StartButton = new System.Windows.Forms.Button();
-            this.MaxPrimeValue = new System.Windows.Forms.Label();
-            this.MaxPrimeLabel = new System.Windows.Forms.Label();
+            this.MaxPrimeNumberValue = new System.Windows.Forms.Label();
+            this.MaxPrimeNumberLabel = new System.Windows.Forms.Label();
             this.TimerControl = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
@@ -64,22 +64,22 @@
             this.StartButton.UseVisualStyleBackColor = true;
             this.StartButton.Click += new System.EventHandler(this.StartButton_Click);
             // 
-            // MaxPrimeValue
+            // MaxPrimeNumberValue
             // 
-            this.MaxPrimeValue.Location = new System.Drawing.Point(311, 115);
-            this.MaxPrimeValue.Name = "MaxPrimeValue";
-            this.MaxPrimeValue.Size = new System.Drawing.Size(353, 32);
-            this.MaxPrimeValue.TabIndex = 5;
-            this.MaxPrimeValue.Text = " ";
+            this.MaxPrimeNumberValue.Location = new System.Drawing.Point(311, 115);
+            this.MaxPrimeNumberValue.Name = "MaxPrimeNumberValue";
+            this.MaxPrimeNumberValue.Size = new System.Drawing.Size(353, 32);
+            this.MaxPrimeNumberValue.TabIndex = 5;
+            this.MaxPrimeNumberValue.Text = " ";
             // 
-            // MaxPrimeLabel
+            // MaxPrimeNumberLabel
             // 
-            this.MaxPrimeLabel.AutoSize = true;
-            this.MaxPrimeLabel.Location = new System.Drawing.Point(49, 115);
-            this.MaxPrimeLabel.Name = "MaxPrimeLabel";
-            this.MaxPrimeLabel.Size = new System.Drawing.Size(157, 32);
-            this.MaxPrimeLabel.TabIndex = 4;
-            this.MaxPrimeLabel.Text = "Max Prime:";
+            this.MaxPrimeNumberLabel.AutoSize = true;
+            this.MaxPrimeNumberLabel.Location = new System.Drawing.Point(49, 115);
+            this.MaxPrimeNumberLabel.Name = "MaxPrimeNumberLabel";
+            this.MaxPrimeNumberLabel.Size = new System.Drawing.Size(264, 32);
+            this.MaxPrimeNumberLabel.TabIndex = 4;
+            this.MaxPrimeNumberLabel.Text = "Max Prime Number:";
             // 
             // TimerControl
             // 
@@ -90,9 +90,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 31F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(710, 362);
-            this.Controls.Add(this.MaxPrimeValue);
-            this.Controls.Add(this.MaxPrimeLabel);
+            this.ClientSize = new System.Drawing.Size(710, 327);
+            this.Controls.Add(this.MaxPrimeNumberValue);
+            this.Controls.Add(this.MaxPrimeNumberLabel);
             this.Controls.Add(this.StartButton);
             this.Controls.Add(this.TimeRemainingValue);
             this.Controls.Add(this.TimeRemaingLabel);
@@ -110,11 +110,10 @@
         #endregion
 
         private System.Windows.Forms.Label TimeRemaingLabel;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label TimeRemainingValue;
         private System.Windows.Forms.Button StartButton;
-        private System.Windows.Forms.Label MaxPrimeValue;
-        private System.Windows.Forms.Label MaxPrimeLabel;
+        private System.Windows.Forms.Label MaxPrimeNumberValue;
+        private System.Windows.Forms.Label MaxPrimeNumberLabel;
         private System.Windows.Forms.Timer TimerControl;
     }
 }

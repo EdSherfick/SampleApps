@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -15,10 +17,16 @@ namespace OptimusPrime
         // set time remaining
         const int DURATION_IN_SECONDS = 60;
         int _timeRemaining;
+        SimplePrimeController _controller = new SimplePrimeController();
+
+        // Declare a System.Threading.CancellationTokenSource.
+        CancellationTokenSource _cts;
 
         public PrimeMaker()
         {
             InitializeComponent();
+
+            _controller.PrimeNumberFound += OnPrimeNumberFound;
         }
 
         private void StartButton_Click(object sender, EventArgs e)
@@ -26,9 +34,30 @@ namespace OptimusPrime
             StartTimerCountDown();
             TimeRemainingValue.Text = GetTimeRemainingText(_timeRemaining);
 
-            //TODO:  Asynchronously Call PrimerController to Generate Numbers
+            try
+            {
+                _cts = new CancellationTokenSource();
+                _controller.Cts = _cts;
+                //Asynchronously Call PrimerController to Generate Numbers
+                Task primeNumberGenerationTask = new Task(new Action(GeneratePrimeNumbers));
+                primeNumberGenerationTask.Start();
+
+            }
+            catch (OperationCanceledException)
+            {
+                MessageBox.Show("Gerenator Canceled");
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Gernate Failed");
+            }
 
             StartButton.Enabled = false;
+        }
+
+        private void GeneratePrimeNumbers()
+        {
+            _controller.Generate();
         }
 
         private void PrimeMaker_Load(object sender, EventArgs e)
@@ -38,13 +67,14 @@ namespace OptimusPrime
 
         private void TimerControl_Tick(object sender, EventArgs e)
         {
+            _timeRemaining--;
             if (_timeRemaining > 0)
             {
-                _timeRemaining--;
                 TimeRemainingValue.Text = GetTimeRemainingText(_timeRemaining);
             }
             else
             {
+                _cts.Cancel();
                 TimeRemainingValue.Text = GetTimeRemainingText(_timeRemaining);
                 StopTimerCountDown();
             }            
@@ -64,7 +94,7 @@ namespace OptimusPrime
             }
             else
             {
-                text = string.Format("{0} Seconds", timeRemaining.ToString());
+                text = string.Format(CultureInfo.InvariantCulture, "{0:#,0} Seconds", timeRemaining);
             }
 
             return text;
@@ -83,6 +113,21 @@ namespace OptimusPrime
             StartButton.Enabled = true;
             Cursor.Current = Cursors.Default;
             _timeRemaining = DURATION_IN_SECONDS;
+        }
+
+        public void OnPrimeNumberFound(object sender, PrimeNumberFoundEventArgs e)
+        {
+            // Because this is raised by a separate thread, we have to invoke an action to avoid cross thread exception.
+            if (MaxPrimeNumberValue.InvokeRequired)
+            {
+                MaxPrimeNumberValue.Invoke(new Action<long>(SetMaxPrimeNumber), e.PrimeNumber);
+                return;
+            }
+        }
+
+        public void SetMaxPrimeNumber(long primeNumber)
+        {
+            MaxPrimeNumberValue.Text = string.Format(CultureInfo.InvariantCulture, "{0:#,0}", primeNumber);
         }
     }
 }

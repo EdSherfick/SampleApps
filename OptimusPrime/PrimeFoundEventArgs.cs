@@ -6,21 +6,8 @@ using System.Threading.Tasks;
 
 namespace OptimusPrime
 {
-    public class PrimeFoundEventArgs:  EventArgs
+    public class PrimeNumberFoundEventArgs:  EventArgs
     {
-        private long _primeNumber;
-
-        public long PrimeNumber
-        {
-            get
-            {
-                return _primeNumber;
-            }
-
-            set
-            {
-                _primeNumber = value;
-            }
-        }
+        public long PrimeNumber { get; set;  }
     }
 }
