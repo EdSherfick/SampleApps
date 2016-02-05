@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace OptimusPrime
         // set time remaining
         const int DURATION_IN_SECONDS = 60;
         int _timeRemaining;
-        SimplePrimeController _controller = new SimplePrimeController();
+        IPrimeController _controller = null;
 
         // Declare a System.Threading.CancellationTokenSource.
         CancellationTokenSource _cts;
@@ -25,8 +26,6 @@ namespace OptimusPrime
         public PrimeMaker()
         {
             InitializeComponent();
-
-            _controller.PrimeNumberFound += OnPrimeNumberFound;
         }
 
         private void StartButton_Click(object sender, EventArgs e)
@@ -34,10 +33,14 @@ namespace OptimusPrime
             StartTimerCountDown();
             TimeRemainingValue.Text = GetTimeRemainingText(_timeRemaining);
 
+            _controller = ControllerFactory.Create(ControllerFactory.CONTROLLER_TYPE_SIMPLE);
+            _controller.PrimeNumberFound += OnPrimeNumberFound;
+
+            _cts = new CancellationTokenSource();
+            _controller.CancellationTokenSource = _cts;
+
             try
             {
-                _cts = new CancellationTokenSource();
-                _controller.Cts = _cts;
                 //Asynchronously Call PrimerController to Generate Numbers
                 Task primeNumberGenerationTask = new Task(new Action(GeneratePrimeNumbers));
                 primeNumberGenerationTask.Start();
@@ -45,11 +48,11 @@ namespace OptimusPrime
             }
             catch (OperationCanceledException)
             {
-                MessageBox.Show("Gerenator Canceled");
+                Debug.Write("Generator Canceled");
             }
             catch (Exception)
             {
-                MessageBox.Show("Gernate Failed");
+                Debug.Write("Generator Failed");
             }
 
             StartButton.Enabled = false;

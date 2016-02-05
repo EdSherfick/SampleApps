@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace OptimusPrime
 {
-    public class SimplePrimeController : ISimplePrimeController
+    public class SimplePrimeController : IPrimeController
     {
         public event EventHandler<PrimeNumberFoundEventArgs> PrimeNumberFound;
 
@@ -29,7 +29,7 @@ namespace OptimusPrime
             }
         }
 
-        public CancellationTokenSource Cts
+        public CancellationTokenSource CancellationTokenSource
         {
             get
             {
@@ -65,7 +65,7 @@ namespace OptimusPrime
                 if (IsPrimeNumber(i))
                 {                  
                     // write all prime numbers to the output window
-                    //Debug.WriteLine(string.Format(CultureInfo.InvariantCulture, "{0:#,0}", i));
+                    Debug.WriteLine(string.Format(CultureInfo.InvariantCulture, "{0:#,0}", i));
 
                     // prime so raise an event to pass the prime number to the consumer
                     RaisePrimeNumberFound(i);

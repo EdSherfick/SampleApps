@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Threading;
 
 namespace OptimusPrime
 {
-    public interface ISimplePrimeController
+    public interface IPrimeController
     {
         long MaxPrimeNumber { get; }
+
+        CancellationTokenSource CancellationTokenSource { set; get;  }
 
         event EventHandler<PrimeNumberFoundEventArgs> PrimeNumberFound;
 
