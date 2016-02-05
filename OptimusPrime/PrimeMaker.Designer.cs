@@ -34,7 +34,7 @@
             this.StartButton = new System.Windows.Forms.Button();
             this.MaxPrimeValue = new System.Windows.Forms.Label();
             this.MaxPrimeLabel = new System.Windows.Forms.Label();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.TimerControl = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // TimeRemaingLabel
@@ -81,9 +81,10 @@
             this.MaxPrimeLabel.TabIndex = 4;
             this.MaxPrimeLabel.Text = "Max Prime:";
             // 
-            // timer1
+            // TimerControl
             // 
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            this.TimerControl.Interval = 1000;
+            this.TimerControl.Tick += new System.EventHandler(this.TimerControl_Tick);
             // 
             // PrimeMaker
             // 
@@ -114,6 +115,6 @@
         private System.Windows.Forms.Button StartButton;
         private System.Windows.Forms.Label MaxPrimeValue;
         private System.Windows.Forms.Label MaxPrimeLabel;
-        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Timer TimerControl;
     }
 }
